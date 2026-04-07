@@ -4,10 +4,11 @@ Colección de skills para agentes de IA coding.
 
 ## Skills Disponibles
 
-| Skill                                            | Descripción                                                               |
-| ---------------------------------------------- | ------------------------------------------------------------------------- |
-| [git-commit](.github/skills/git-commit/)        | Commits interactivos con auto-detección de tipo y mensajes convencionales |
+| Skill                                                | Descripción                                                               |
+| ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| [git-commit](.github/skills/git-commit/)             | Commits interactivos con auto-detección de tipo y mensajes convencionales |
 | [markdown-to-pptx](.github/skills/markdown-to-pptx/) | Convierte esquemas markdown a presentaciones PowerPoint (PPTX)            |
+| [readme-generator](.github/skills/readme-generator/) | Genera, actualiza y mejora archivos README.md                             |
 
 ## Instalación
 
