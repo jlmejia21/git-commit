@@ -1,17 +1,56 @@
 ---
 name: git-commit
-description: "Use when: creating a git commit with proper workflow - runs git status, stages changes with git add, and commits with a meaningful message following conventional commits format"
+description: "Use when: creating a git commit automatically - detects file types, applies conventional commits format, runs git status → add → commit without prompts"
 ---
 
 # Git Commit Skill
 
-## Workflow
+## Workflow (Automatic)
 
 1. **Show status** — Run `git status` to see current changes
-2. **Validate type** — Ask user for commit type (feat, fix, docs, style, refactor, test, chore)
-3. **Build message** — Construct conventional commit: `type(scope): description`
-4. **Stage files** — Run `git add <files>` to stage the desired changes
-5. **Commit** — Run `git commit -m "<message>"` with validated message
+2. **Auto-detect type** — Analyze changed files to determine commit type
+3. **Build message** — Construct conventional commit automatically
+4. **Stage & Commit** — Run `git add -A` then `git commit -m "<message>"`
+
+## Auto-Detection Rules
+
+| Files Changed                                | Type Detected |
+| -------------------------------------------- | ------------- |
+| `*.md`, `README*`, `docs/`                   | `docs`        |
+| `test/*`, `__tests__/*`, `*.test.ts`         | `test`        |
+| `package.json`, `requirements.txt`, `*.lock` | `chore`       |
+| `.github/`, `.gitlab-ci.yml`, `Dockerfile`   | `ci`          |
+| `src/*.ts`, `src/*.js` (new feature)         | `feat`        |
+| `src/*.ts`, `src/*.js` (bug fix)             | `fix`         |
+| `*.css`, `*.scss`, `style/*`                 | `style`       |
+| `refactor`, `reorganize` in message          | `refactor`    |
+| Default                                      | `chore`       |
+
+## Auto-Detection Logic
+
+```
+IF files match multiple types:
+  → Use highest priority: feat > fix > refactor > style > test > docs > ci > chore
+
+IF no files matched:
+  → Default to `chore`
+```
+
+## Manual Override
+
+The user can specify type manually:
+
+- `/git-commit feat: add new feature` — Force `feat` type
+- `/git-commit fix: resolve bug` — Force `fix` type
+- `/git-commit --type=refactor --scope=api` — Explicit type and scope
+
+## Output
+
+The skill will output:
+
+- Detected type and reason
+- Constructed commit message
+- Git command execution
 
 ## Conventional Commits Format
 
@@ -51,18 +90,18 @@ description: "Use when: creating a git commit with proper workflow - runs git st
 /git-commit
 ```
 
-The agent will:
+The agent will automatically:
 
-1. Check what files have been modified
-2. Ask which type (feat, fix, etc.)
-3. Ask for scope (optional) and description
-4. Validate format before committing
-5. Execute `git add <files>` then `git commit -m "<message>"`
+1. Run `git status` to see changes
+2. Detect commit type based on file patterns
+3. Build a conventional commit message from file names/changes
+4. Execute `git add -A && git commit -m "<message>"`
 
-## Arguments
+## Manual Override
 
-- `files` (optional): Specific files to commit, e.g., `/git-commit src/index.ts`
-- `message` (optional): Commit message, e.g., `/git-commit "fix: resolve auth bug"`
+- `/git-commit "feat: add new feature"` — Direct message
+- `/git-commit --type=fix --scope=auth` — Explicit type/scope
+- `/git-commit src/utils/` — Commit specific files
 
 ## Tips
 
@@ -73,7 +112,7 @@ The agent will:
 
 ## Example Prompts
 
-- `/git-commit` — Interactive workflow with type selection
-- `/git-commit "feat: add user authentication"` — Direct with message
-- `/git-commit "fix(auth): resolve token expiration"` — With scope
+- `/git-commit` — Auto-detect type and commit
+- `/git-commit "feat: add user authentication"` — Override with custom message
+- `/git-commit --type=fix --scope=auth` — Override type and scope
 - `/git-commit src/utils/` — Commit specific folder
