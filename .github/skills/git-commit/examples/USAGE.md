@@ -1,6 +1,6 @@
 # Git Commit Skill Examples
 
-## 1. Automatic Detection
+## 1. Automatic Detection (Interactive)
 
 User types:
 
@@ -12,11 +12,10 @@ Skill output:
 
 ```
 Detected: .github/skills/ → type: feat (new feature)
-Message: feat(skills): add git-commit skill for conventional commits
+Proposed message: "feat(skills): add git-commit skill for conventional commits"
 
-→ git status
-→ git add -A
-→ git commit -m "feat(skills): add git-commit skill for conventional commits"
+¿Proceder con el commit? (yes/no)
+→ User confirms: git add -A && git commit -m "feat(skills): add git-commit skill for conventional commits"
 ✓ Committed
 ```
 
@@ -31,10 +30,10 @@ User types:
 Skill output:
 
 ```
-Message: fix: resolve login redirect bug
+Proposed message: "fix: resolve login redirect bug"
 
-→ git add -A
-→ git commit -m "fix: resolve login redirect bug"
+¿Proceder con el commit? (yes/no)
+→ User confirms: git add -A && git commit -m "fix: resolve login redirect bug"
 ✓ Committed
 ```
 
@@ -47,6 +46,15 @@ User types:
 ```
 
 Skill output:
+
+```
+Detected: src/api/* → type: refactor (code refactoring)
+Proposed message: "refactor(api): refactor api implementation"
+
+¿Proceder con el commit? (yes/no)
+→ User confirms: git add -A && git commit -m "refactor(api): refactor api implementation"
+✓ Committed
+```
 
 ```
 Type: refactor, Scope: api

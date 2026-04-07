@@ -1,16 +1,36 @@
 ---
 name: git-commit
-description: "Use when: creating a git commit automatically - detects file types, applies conventional commits format, runs git status → add → commit without prompts"
+description: "Use when: creating git commits interactively - detects file types, applies conventional commits format, shows proposed message for user confirmation before executing git add → commit"
 ---
 
 # Git Commit Skill
 
-## Workflow (Automatic)
+## Workflow (Interactive)
 
 1. **Show status** — Run `git status` to see current changes
 2. **Auto-detect type** — Analyze changed files to determine commit type
 3. **Build message** — Construct conventional commit automatically
-4. **Stage & Commit** — Run `git add -A` then `git commit -m "<message>"`
+4. **Show proposal** — Display the proposed commit message for user approval
+5. **Execute on approval** — Only run `git add -A` then `git commit -m "<message>"` after user confirms
+
+## Interactive Confirmation
+
+Before executing the commit, the skill will:
+
+1. **Display** the proposed commit message with detected type and reason
+2. **Ask** for confirmation before proceeding
+3. **Execute** only after user approval
+
+Example:
+
+```
+Detected: src/*.ts → type: feat (new feature in source code)
+Proposed message: "feat(auth): add login validation"
+
+¿Proceder con el commit? (yes/no)
+→ If yes: git add -A && git commit -m "feat(auth): add login validation"
+→ If no: Cancel operation
+```
 
 ## Auto-Detection Rules
 
@@ -95,7 +115,8 @@ The agent will automatically:
 1. Run `git status` to see changes
 2. Detect commit type based on file patterns
 3. Build a conventional commit message from file names/changes
-4. Execute `git add -A && git commit -m "<message>"`
+4. **Show the proposed message for confirmation**
+5. Execute `git add -A && git commit -m "<message>"` only after user approval
 
 ## Manual Override
 
