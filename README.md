@@ -14,12 +14,12 @@ Colección de skills para agentes de IA coding.
 
 ```bash
 # Instalar todos los skills
-npx skills add joseluis/agents-skills
+npx skills add jlmejia21/agent-skills
 
 # Instalar un skill específico
-npx skills add joseluis/agents-skills --skill git-commit
-npx skills add joseluis/agents-skills --skill markdown-to-pptx
-npx skills add joseluis/agents-skills --skill readme-generator
+npx skills add jlmejia21/agent-skills --skill git-commit
+npx skills add jlmejia21/agent-skills --skill markdown-to-pptx
+npx skills add jlmejia21/agent-skills --skill readme-generator
 ```
 
 ---
